@@ -1,0 +1,12 @@
+name: MultiCombo
+version: 1.0.0-SNAPSHOT
+description: Keep track of hit combos on combat and bonuses.
+
+author: Deku
+website: http://www.github.com/Deku
+main: cl.josedev.MultiCombo.MultiCombo
+
+commands:
+    combo:
+        description: Display your highest combo
+        usage: /<command>
