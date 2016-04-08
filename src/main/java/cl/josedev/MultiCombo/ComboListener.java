@@ -47,25 +47,25 @@ public class ComboListener implements Listener {
 
 					switch (hits) {
 						case 5:
-							player.sendMessage(MultiCombo.TAG + plugin.getConfig().getString("messages.combo5"));
+							player.sendMessage(MultiCombo.TAG + plugin.language.getString("combo5"));
 							player.getWorld().playEffect(player.getLocation(), Effect.SNOWBALL_BREAK, 10);
 							player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
 							event.setDamage(dmg * plugin.getConfig().getDouble("damageMultipliers.combo5"));
 							break;
 						case 10:
-							player.sendMessage(MultiCombo.TAG + plugin.getConfig().getString("messages.combo10"));
+							player.sendMessage(MultiCombo.TAG + plugin.language.getString("combo10"));
 							player.getWorld().playEffect(player.getLocation(), Effect.FLAME, 10);
 							player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
 							event.setDamage(dmg * plugin.getConfig().getDouble("damageMultipliers.combo10"));
 							break;
 						case 20:
-							player.sendMessage(MultiCombo.TAG + plugin.getConfig().getString("messages.combo20"));
+							player.sendMessage(MultiCombo.TAG + plugin.language.getString("combo20"));
 							player.getWorld().playEffect(player.getLocation(), Effect.FIREWORKS_SPARK, 10);
 							player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
 							event.setDamage(dmg * plugin.getConfig().getDouble("damageMultipliers.combo20"));
 							break;
 						case 50:
-							player.sendMessage(MultiCombo.TAG + plugin.getConfig().getString("messages.combo50"));
+							player.sendMessage(MultiCombo.TAG + plugin.language.getString("combo50"));
 							player.getWorld().playEffect(player.getLocation(), Effect.EXPLOSION_LARGE, 10);
 							player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1));
 							event.setDamage(dmg * plugin.getConfig().getDouble("damageMultipliers.combo50"));

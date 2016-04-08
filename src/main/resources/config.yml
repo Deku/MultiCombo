@@ -7,9 +7,5 @@ damageMultipliers:
   combo50: 1.5
 ## Max time between hits before the combo is reseted
 comboDuration: 2
-## Message to show when a combo is reached
-messages:
-  combo5: '§c§l    >>>§r§eMulti Hit Combo (x5)§c§l<<<'
-  combo10: '§c§l    >>>§r§eSuper Hit Combo (x10)§c§l<<<'
-  combo20: '§c§l    >>>§r§eUltra Hit Combo (x20)§c§l<<<'
-  combo50: '§c§l    >>>§r§eHyper Hit Combo (x50)§c§l<<<'
+## Language. Points to the file "lang_%language%.yml"
+language: "en"
