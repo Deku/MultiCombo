@@ -1,11 +1,50 @@
 ## These multipliers will affect the standard given damage.
 ## Non-combo hits damage x1
-damageMultipliers:
-  combo5: 1.1
-  combo10: 1.2
-  combo20: 1.35
-  combo50: 1.5
+combo:
+  5:
+    multiplier: 1.1
+    effects:
+      'INCREASE_DAMAGE':
+        duration: 3
+        level: 1
+  10:
+    multiplier: 1.1
+    effects:
+      'INCREASE_DAMAGE':
+        duration: 3
+        level: 2
+  20:
+    multiplier: 1.1
+    effects:
+      'INCREASE_DAMAGE':
+        duration: 3
+        level: 3
+  50:
+    multiplier: 1.1
+    effects:
+      'INCREASE_DAMAGE':
+        duration: 3
+        level: 4
 ## Max time between hits before the combo is reseted
 comboDuration: 2
+
+## Allow combos only with melee weapons
+meleeOnly: true
+
+## Damage sources considered in melee combat. Comma separated
+## Valid options are: hand, sword, axe, hoe, spade, pickaxe, shears
+## Will only apply if 'meleeOnly' is true
+meleeWhitelist:
+  - hand
+  - sword
+  - axe
+  - hoe
+  - spade
+  - pickaxe
+  - shears
+
 ## Language. Points to the file "lang_%language%.yml"
 language: "en"
+
+## Plugin tag. Default [COMBO]
+tag: "§6[COMBO]§e"

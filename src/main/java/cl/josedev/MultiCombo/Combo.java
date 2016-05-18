@@ -1,59 +1,45 @@
 package cl.josedev.MultiCombo;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.bukkit.entity.Entity;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.bukkit.util.NumberConversions;
 
 public class Combo {
 	
-	private long hitTime = System.currentTimeMillis();
-	private long expireTime;
-	private UUID playerId;
-	private UUID victimId;
-	private int hitCount = 1;
+	private int amount;
+	private double multiplier;
+	private List<PotionEffect> effects = new ArrayList<PotionEffect>();
 	
-	public Combo (Player player, Entity victim, long expireTime) {
-		this.playerId = player.getUniqueId();
-		this.victimId = victim.getUniqueId();
-		this.expireTime = expireTime;
+	public Combo(int amount, ConfigurationSection config) {
+		this.amount = amount;
+		this.multiplier = config.getDouble("multiplier");
+		
+		for (String key : config.getConfigurationSection("effects").getKeys(false)) {
+			ConfigurationSection ms = config.getConfigurationSection("effects." + key);
+			String effectId = key.toUpperCase();
+			int duration = ms.getInt("duration");
+			int level = ms.getInt("level");
+			PotionEffectType type = PotionEffectType.getByName(effectId);
+			
+			effects.add(new PotionEffect(type, duration * 20/*ticks*/, level));
+		}
 	}
 	
-	public long getHitTime() {
-        return hitTime;
-    }
-	
-	public int getHitCount() {
-		return hitCount;
+	public int getHitsAmount() {
+		return this.amount;
 	}
 	
-	public void increaseHitCount() {
-		this.hitCount = hitCount + 1;
+	public double getMultiplier() {
+		return this.multiplier;
 	}
-
-    public long getExpireTime() {
-        return expireTime;
-    }
-
-    public UUID getVictimId() {
-        return victimId;
-    }
-    
-    public UUID getPlayerId() {
-    	return playerId;
-    }
-    
-    public int getDuration() {
-        long currentTime = System.currentTimeMillis();
-        return expireTime > currentTime ? NumberConversions.ceil((expireTime - currentTime) / 1000D) : 0;
-    }
-
-    public boolean isExpired() {
-        return getDuration() < 1;
-    }
-
-	public void updateExpireTime(long newTime) {
-		this.expireTime = newTime;
+	
+	public void applyEffects(Player player) {
+		for (PotionEffect effect : effects) {
+			player.addPotionEffect(effect);
+		}
 	}
 }

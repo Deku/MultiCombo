@@ -19,23 +19,24 @@ import org.bukkit.ChatColor;
 
 public class MultiCombo extends JavaPlugin {
 	
-	public Map<UUID, Combo> hitsCount = new HashMap<UUID, Combo>();
+	public Map<UUID, HitsChain> hitsCount = new HashMap<UUID, HitsChain>();
 	public Map<UUID, Integer> highestCombo = new HashMap<UUID, Integer>();
 	public ComboManager manager;
 	public static Integer NO_HITS = 0;
-	public static String TAG = ChatColor.GOLD + "[COMBO] " + ChatColor.YELLOW;
+	public String TAG;
 	public FileConfiguration language;
-	
+	public boolean meleeOnly;
 	
 	@Override
 	public void onEnable() {
-		this.manager = new ComboManager(this);
-		
-		getConfig().options().copyDefaults(true);
-		saveConfig();
+		this.saveDefaultConfig();
 		
 		copyLanguages();
 		loadLanguage();
+		
+		this.manager = new ComboManager(this);
+		this.TAG = getConfig().getString("tag");
+		this.meleeOnly = getConfig().getBoolean("meleeOnly");
 		
 		getServer().getPluginManager().registerEvents(new ComboListener(this), this);
 		

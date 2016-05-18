@@ -1,23 +1,35 @@
 package cl.josedev.MultiCombo;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.configuration.ConfigurationSection;
 
 public class ComboManager {
 	private MultiCombo plugin;
+	public Map<Integer, Combo> combos = new HashMap<Integer, Combo>();
 	
 	public ComboManager(MultiCombo plugin) {
 		this.plugin = plugin;
+		
+		// Load combos from config
+		for (String key : plugin.getConfig().getConfigurationSection("combo").getKeys(false)) {
+			ConfigurationSection comboConfig = plugin.getConfig().getConfigurationSection("combo." + key);
+			Integer comboAmount = Integer.parseInt(key);
+			
+			combos.put(comboAmount, new Combo(comboAmount, comboConfig));
+		}
 	}
 	
 	public void purge() {
-        Iterator<Combo> iterator = plugin.hitsCount.values().iterator();
+        Iterator<HitsChain> iterator = plugin.hitsCount.values().iterator();
         while (iterator.hasNext()) {
-            Combo combo = iterator.next();
+            HitsChain combo = iterator.next();
             Player player = Bukkit.getServer().getPlayer(combo.getPlayerId());
 
             if (player != null) {
@@ -40,12 +52,12 @@ public class ComboManager {
 	
 	public void mark(Player player, Entity victim) {
 		long expireTime = System.currentTimeMillis() + (plugin.getConfig().getLong("comboDuration") * 1000);
-		plugin.hitsCount.put(player.getUniqueId(), new Combo(player, victim, expireTime));
+		plugin.hitsCount.put(player.getUniqueId(), new HitsChain(player, victim, expireTime));
 		ComboUpdateTask.run(plugin, player);
 	}
 	
 	public void updateMark(Player p) {
-		Combo combo = plugin.hitsCount.get(p.getUniqueId());
+		HitsChain combo = plugin.hitsCount.get(p.getUniqueId());
 		long expireTime = System.currentTimeMillis() + (plugin.getConfig().getLong("comboDuration") * 1000);
 		combo.increaseHitCount();
 		combo.updateExpireTime(expireTime);
@@ -54,7 +66,7 @@ public class ComboManager {
 	}
 	
 	public void removeMark(Player player) {
-		Combo combo = plugin.hitsCount.get(player.getUniqueId());
+		HitsChain combo = plugin.hitsCount.get(player.getUniqueId());
 		
 		if (combo != null) {
 			if (combo.getHitCount() > plugin.getHighestCombo(player)) {
@@ -65,8 +77,8 @@ public class ComboManager {
 		plugin.hitsCount.remove(player.getUniqueId());
 	}
 	
-	public Combo getCombo(UUID playerId) {
-        Combo combo = plugin.hitsCount.get(playerId);
+	public HitsChain getCombo(UUID playerId) {
+        HitsChain combo = plugin.hitsCount.get(playerId);
 
         if (combo == null || combo.isExpired()) {
             return null;
@@ -76,7 +88,7 @@ public class ComboManager {
     }
 	
 	public boolean isMarked(UUID playerId) {
-		Combo combo = plugin.hitsCount.get(playerId);
+		HitsChain combo = plugin.hitsCount.get(playerId);
 		
 		return (combo != null && !combo.isExpired());
 	}

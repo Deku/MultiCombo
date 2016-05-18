@@ -34,7 +34,7 @@ public class ComboUpdateTask extends BukkitRunnable {
 			return;
 		}
 		
-		Combo combo = plugin.getComboManager().getCombo(playerId);
+		HitsChain combo = plugin.getComboManager().getCombo(playerId);
 		if (combo == null || combo.isExpired()) {
 			plugin.getComboManager().removeMark(player);
 			cancel();
