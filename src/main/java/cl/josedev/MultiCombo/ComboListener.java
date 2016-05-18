@@ -3,8 +3,8 @@ package cl.josedev.MultiCombo;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -111,14 +111,7 @@ public class ComboListener implements Listener {
 					// A combo was made
 					if (combo != null) {
 						player.sendMessage(plugin.TAG + plugin.language.getString("combo" + hits));
-						player.spigot().playEffect(victim.getLocation().add(0, 1, 0),
-													Effect.FLAME,
-													0,
-													0, 
-													0, 0, 0, 
-													0.2f, 
-													50, 
-													50);
+						player.getWorld().spawnParticle(Particle.FLAME, victim.getLocation().add(0, 1, 0), 30);
 						combo.applyEffects(player);
 						event.setDamage(dmg * combo.getMultiplier());
 					}
