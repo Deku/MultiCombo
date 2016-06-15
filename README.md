@@ -10,7 +10,7 @@ This plugin allows you to apply a buff and extra damage when a player does a con
 - Automatically removes unused data, to keep your memory clean and shiny
 
 ## Installation
-- Download the latest version of the plugin (recommended)
+- Download the latest release of the plugin from [here](https://www.spigotmc.org/resources/multicombo.22124/) (recommended) or get the lastest build from [here](https://ci.jgutierrez.cl/job/MultiCombo/)
 - Drop the *.jar* in your plugins forlder
 - Start the server and the *config.yml* will be automatically created
 
